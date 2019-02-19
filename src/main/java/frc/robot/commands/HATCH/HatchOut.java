@@ -5,8 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.HATCH;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -14,9 +15,8 @@ import frc.robot.RobotMap;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ClawSpintake extends Command {
-
-  public ClawSpintake() {
+public class HatchOut extends Command {
+  public HatchOut() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
   }
@@ -24,7 +24,7 @@ public class ClawSpintake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.armIntake.set(0.6);
+      RobotMap.hatch.set(Value.kReverse);
   }
 
   // Called repeatedly when this Command is scheduled to run

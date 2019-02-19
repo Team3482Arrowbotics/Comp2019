@@ -5,20 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ARM;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Claw goes spinny spinnyyyyyyy
  */
-public class ArmUp extends Command {
-  public ArmUp() {
+public class ClawSpintake extends Command {
+
+  public ClawSpintake() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
   }
@@ -26,8 +24,8 @@ public class ArmUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.fArm.set(Value.kReverse);
-    }
+    RobotMap.armIntake.set(0.6);
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override

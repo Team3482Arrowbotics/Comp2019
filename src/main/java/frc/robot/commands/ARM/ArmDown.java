@@ -5,10 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ARM;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -16,8 +17,8 @@ import frc.robot.RobotMap;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ElevatorMax extends Command {
-  public ElevatorMax() {
+public class ArmDown extends Command {
+  public ArmDown() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
   }
@@ -25,7 +26,7 @@ public class ElevatorMax extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      RobotMap.elevatorTalonOne.set(ControlMode.Position, 21000);
+      RobotMap.fArm.set(Value.kForward);
   }
 
   // Called repeatedly when this Command is scheduled to run

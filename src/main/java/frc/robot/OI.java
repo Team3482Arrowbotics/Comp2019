@@ -9,7 +9,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ARM.*;
+import frc.robot.commands.ELEVATOR.*;
+import frc.robot.commands.HATCH.*;
 import frc.robot.commands.*;
+import frc.robot.commands.CommandGroups.Subsystems.*;
+import frc.robot.commands.CommandGroups.Vision.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,9 +23,7 @@ import frc.robot.commands.*;
 public class OI {
   public static Joystick flightStick;
   public static Joystick logitech;
-  public static JoystickButton fK;
-  public static JoystickButton tK;
-  public static JoystickButton fTK;
+
   public static JoystickButton eMax;
   public static JoystickButton eMin;
 
@@ -53,9 +56,6 @@ public class OI {
 
     // b.whenPressed(new Move(ticks_per_centimeter*RobotMap.lidar.getDistance()));
 
-    fK = new JoystickButton(driverOne, 1);
-    tK = new JoystickButton(driverOne, 4);
-    fTK = new JoystickButton(driverOne, 3);
     eMax = new JoystickButton(driverOne, 2);
     eMin = new JoystickButton(driverOne, 8);
 
@@ -72,9 +72,6 @@ public class OI {
     hIn = new JoystickButton(flightStick, 11);
     hOut = new JoystickButton(flightStick, 12);
 
-    fK.whileHeld(new FiveK());
-    tK.whileHeld(new TenK());
-    fTK.whileHeld(new FifteenK());
     eMax.whileHeld(new ElevatorZero());
     eMin.whileHeld(new ElevatorMax());
 

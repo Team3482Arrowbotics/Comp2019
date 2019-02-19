@@ -12,8 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.robot.subsystems.Elevator;
-
+import frc.robot.Vision.Vision;
 import frc.robot.subsystems.DrivePIDOutput;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -46,8 +45,6 @@ public class RobotMap {
   public static DoubleSolenoid fArm;
   public static DoubleSolenoid hatch;
 
-  public static Elevator e;
-
   public static Compressor c;
 
   public static WPI_TalonSRX frontLeft;
@@ -65,11 +62,15 @@ public class RobotMap {
   public static PWMLidar lidar;
   public static AHRS navx; 
 
+  public static Vision vision;
+
   public static PIDDifferentialDrive driveDiff; 
   public static DrivePIDOutput drivePID; 
   public static TwoEncoderPID encoders; 
   public static PIDController driveController;
   public static PIDController counteractDrift; 
+  public static PIDController visionController;
+  public static PIDController visionDistController;
   public static RotationAdjuster rotationAdjuster;
   public static PIDController rotationController;
   public static SpeedControllerGroup rightDiff; 
@@ -97,8 +98,6 @@ public class RobotMap {
     elevatorTalonTwo = new WPI_TalonSRX(8); //8
     elevatorTalonTwo.setInverted(true);
     elevatorTalonTwo.follow(elevatorTalonOne);
-
-    e = new Elevator();
 
     armTurn = new WPI_TalonSRX(5); //5
     armTurn.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -136,7 +135,19 @@ public class RobotMap {
     driveController.setOutputRange(-.3, .3);
 		drive.setDeadband(0.1);
 		drive.setSafetyEnabled(false);
-		driveController.setAbsoluteTolerance(2);
+    driveController.setAbsoluteTolerance(2);
+    
+    visionController = new PIDController(0.1, 0, 0, driveDiff);
+    visionController.setInputRange(-320, 320);
+		visionController.setOutputRange(-.65, .65);
+		visionController.setContinuous(true);
+    visionController.setAbsoluteTolerance(5);
+
+    visionDistController = new PIDController(0.1, 0, 0, source, driveDiff);
+    visionDistController.setInputRange(-320, 320);
+		visionDistController.setOutputRange(-.5, .5);
+		visionDistController.setContinuous(true);
+    visionDistController.setAbsoluteTolerance(5);
 
     rotationController = new PIDController(0.1, 0, 0, navx, driveDiff);
 		rotationController.setInputRange(-180, 180);

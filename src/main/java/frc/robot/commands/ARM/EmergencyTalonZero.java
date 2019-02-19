@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ARM;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Sets Arm Talon to Zero Speed and Stops PID
  */
 public class EmergencyTalonZero extends Command {
   public EmergencyTalonZero() {

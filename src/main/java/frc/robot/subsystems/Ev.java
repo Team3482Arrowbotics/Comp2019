@@ -74,5 +74,10 @@ public class Ev extends Subsystem {
       }
 
   }
+
+  public double getPos()
+  {
+    return RobotMap.elevatorTalonOne.getSelectedSensorPosition();
+  }
 }
 

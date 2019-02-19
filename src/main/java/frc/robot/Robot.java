@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ArmVator;
 import frc.robot.subsystems.Ev;
@@ -21,6 +22,7 @@ import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.PathfinderFRC;
 import jaci.pathfinder.Trajectory; 
 import jaci.pathfinder.followers.EncoderFollower;
+
 
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.commands.Move;
@@ -44,6 +46,11 @@ public class Robot extends TimedRobot {
   public SendableChooser<String> hatchOrCargo; 
 
   public static boolean isEMovingUp, isEMovingDown;
+
+  public static NetworkTableEntry centerX;
+  public static NetworkTableEntry xDist;
+  public static NetworkTableEntry distance;
+  public static NetworkTableEntry angle;
 
   private EncoderFollower l_enc_follower; 
   private EncoderFollower r_enc_follower; 
@@ -300,9 +307,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     SmartDashboard.putNumber("EPOS", RobotMap.elevatorTalonOne.getSelectedSensorPosition());
-    //Ev.run();
-    //RobotMap.e.teleopRun();
-    //RobotMap.elevatorTalonOne.set(OI.flightStick.getRawAxis(1));
+    // oi answer
+    Ev.run();
     SmartDashboard.putNumber("APOS", RobotMap.armTurn.getSelectedSensorPosition());
     
     double speed = OI.logitech.getRawAxis(1);

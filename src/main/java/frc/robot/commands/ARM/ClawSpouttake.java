@@ -5,9 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package frc.robot.commands.ARM;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -16,8 +14,9 @@ import frc.robot.RobotMap;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ElevatorZero extends Command {
-  public ElevatorZero() {
+public class ClawSpouttake extends Command {
+
+  public ClawSpouttake() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
   }
@@ -25,7 +24,7 @@ public class ElevatorZero extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      RobotMap.elevatorTalonOne.set(ControlMode.Position, 0);
+    RobotMap.armIntake.set(-0.6);
   }
 
   // Called repeatedly when this Command is scheduled to run
