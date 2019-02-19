@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ArmVator;
 import frc.robot.subsystems.Ev;
@@ -26,6 +28,9 @@ import jaci.pathfinder.followers.EncoderFollower;
 
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.commands.Move;
+import frc.robot.commands.Turn;
+import frc.robot.commands.HATCH.HatchIn;
+import frc.robot.commands.HATCH.HatchOut;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -51,6 +56,7 @@ public class Robot extends TimedRobot {
   public static NetworkTableEntry xDist;
   public static NetworkTableEntry distance;
   public static NetworkTableEntry angle;
+  public static NetworkTableEntry isLeft;
 
   private EncoderFollower l_enc_follower; 
   private EncoderFollower r_enc_follower; 
@@ -82,11 +88,18 @@ public class Robot extends TimedRobot {
     isEMovingDown = false;
     RobotMap.c.start();
 
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable vision = inst.getTable("Vision");
+    centerX = vision.getEntry("centerX");
+    xDist = vision.getEntry("distX");
+    distance = vision.getEntry("distance");
+    angle = vision.getEntry("angle");
+    isLeft = vision.getEntry("isLeft");
+
     driveEnabled = true; 
     pathChooser = new SendableChooser<String>(); 
     hatchOrCargo = new SendableChooser<String>(); 
 
-    
     pathChooser.setDefaultOption("Default", "????");
     pathChooser.addOption("LtoFrontRight", "LtoFrontRight");
     pathChooser.addOption("RtoFrontRight", "RtoFrontRight");
@@ -217,10 +230,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-/*
+
     if(hatch)
     {
-      if(state == 1)
+      if(state == 1) //start path 1
       {
         Trajectory left_trajectory = PathfinderFRC.getTrajectory(pathname + ".right");
         Trajectory right_trajectory = PathfinderFRC.getTrajectory(pathname+ ".left");
@@ -233,29 +246,32 @@ public class Robot extends TimedRobot {
         r_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
         follower_notifier = new Notifier(this::followPath);
         follower_notifier.startPeriodic(left_trajectory.get(0).dt);
+
         state = 2; 
       }
-      else if(state ==2)
+      else if(state ==2) //start vision
       {
-        //start vision
+
         state = 3; 
       }
-      else if(state ==3)
+      else if(state ==3) //hatch outtake 
       {
-        //hatch outtake 
+        new HatchOut(); 
+
         state = 4; 
       }
-      else if (state ==4)
+      else if (state ==4) //back up and turn around
       {
-        //back up turn around
+        new Move(-500); 
+        new Turn(180);
         state = 5; 
       }
-      else if(state ==5)
+      else if(state ==5) //start path 2
       {
-        if(pathname.equals(""))
+        if(pathname.equals("LtoRocket")||pathname.equals("MtoRocket")||pathname.equals("RtoRocket"))
         {
-          Trajectory left_trajectory = PathfinderFRC.getTrajectory(pathname + ".right");
-          Trajectory right_trajectory = PathfinderFRC.getTrajectory(pathname+ ".left");
+          Trajectory left_trajectory = PathfinderFRC.getTrajectory("RocketBack" + ".right");
+          Trajectory right_trajectory = PathfinderFRC.getTrajectory("RocketBack"+ ".left");
       
           l_enc_follower = new EncoderFollower(left_trajectory);
           r_enc_follower = new EncoderFollower(right_trajectory);
@@ -266,27 +282,13 @@ public class Robot extends TimedRobot {
           follower_notifier = new Notifier(this::followPath);
           follower_notifier.startPeriodic(left_trajectory.get(0).dt);
         }
-        else if(pathname.equals(""))
-        {
-          Trajectory left_trajectory = PathfinderFRC.getTrajectory(pathname + ".right");
-          Trajectory right_trajectory = PathfinderFRC.getTrajectory(pathname+ ".left");
-      
-          l_enc_follower = new EncoderFollower(left_trajectory);
-          r_enc_follower = new EncoderFollower(right_trajectory);
-          l_enc_follower.configureEncoder(RobotMap.encoderLeft.get(), k_ticks_per_rev, k_wheel_diameter);
-          l_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
-          r_enc_follower.configureEncoder(RobotMap.encoderLeft.get(), k_ticks_per_rev, k_wheel_diameter);
-          r_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
-          follower_notifier = new Notifier(this::followPath);
-          follower_notifier.startPeriodic(left_trajectory.get(0).dt);
-        } 
         state = 6; 
       }
-      else if(state == 6)
+      else if(state == 6) //hatch intake
       {
-        //hatch intake 
+        new HatchIn(); 
       }
-    }*/
+    }
   }
 
   @Override

@@ -13,6 +13,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.Vision.Vision;
+import frc.robot.Vision.VisionAngle;
+import frc.robot.Vision.VisionDistance;
 import frc.robot.subsystems.DrivePIDOutput;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -63,6 +65,8 @@ public class RobotMap {
   public static AHRS navx; 
 
   public static Vision vision;
+  public static VisionAngle vAng;
+  public static VisionDistance vDist;
 
   public static PIDDifferentialDrive driveDiff; 
   public static DrivePIDOutput drivePID; 
@@ -121,6 +125,10 @@ public class RobotMap {
     rightDiff.setInverted(true);
     drive = new DifferentialDrive(left,right);
 
+    vision = new Vision(Robot.centerX, Robot.xDist, Robot.distance, Robot.angle, Robot.isLeft);
+    vAng = new VisionAngle();
+    vDist = new VisionDistance();
+
     lidar = new PWMLidar(5);
     navx = new AHRS(Port.kUSB); 
     encoderLeft = new Encoder(8,9, true); // For left encoder it reads -ve values so reverse direction 
@@ -137,13 +145,13 @@ public class RobotMap {
 		drive.setSafetyEnabled(false);
     driveController.setAbsoluteTolerance(2);
     
-    visionController = new PIDController(0.1, 0, 0, driveDiff);
+    visionController = new PIDController(0.1, 0, 0, vAng, driveDiff);
     visionController.setInputRange(-320, 320);
 		visionController.setOutputRange(-.65, .65);
 		visionController.setContinuous(true);
     visionController.setAbsoluteTolerance(5);
 
-    visionDistController = new PIDController(0.1, 0, 0, source, driveDiff);
+    visionDistController = new PIDController(0.1, 0, 0, vDist, driveDiff);
     visionDistController.setInputRange(-320, 320);
 		visionDistController.setOutputRange(-.5, .5);
 		visionDistController.setContinuous(true);

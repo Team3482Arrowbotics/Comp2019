@@ -1,4 +1,4 @@
-/*package frc.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -27,4 +27,4 @@ public class Turn extends Command{
 		System.out.println( "PID Speed: " + RobotMap.rotationController.get());
 		return RobotMap.rotationController.onTarget();
 	}
-}*/
+}

@@ -16,12 +16,13 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  */
 public class Vision {
     String arg;
-    NetworkTableEntry centerX, xDist, distance, angle;
-    public Vision(NetworkTableEntry centerX, NetworkTableEntry xDist, NetworkTableEntry distance, NetworkTableEntry angle){
+    NetworkTableEntry centerX, xDist, distance, angle, isLeft;
+    public Vision(NetworkTableEntry centerX, NetworkTableEntry xDist, NetworkTableEntry distance, NetworkTableEntry angle, NetworkTableEntry isLeft){
         this.centerX = centerX;
         this.xDist = xDist;
         this.distance = distance;
         this.angle = angle;
+        this.isLeft = isLeft;
     }
     public double returnCenterX(){
         return centerX.getDouble(0.0);
@@ -34,5 +35,8 @@ public class Vision {
     }
     public double returnXDist(){
         return xDist.getDouble(-1.0);
+    }
+    public boolean returnIsLeft(){
+        return isLeft.getBoolean(false);
     }
 }
