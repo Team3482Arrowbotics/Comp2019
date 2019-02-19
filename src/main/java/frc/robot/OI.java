@@ -41,12 +41,17 @@ public class OI {
   public static JoystickButton n;
   public static JoystickButton x;
 
+  private static final double ticks_per_centimeter = 2000/317.5; //travels 125in in 2000 encoder ticks
+
+
   public OI()
   {
     flightStick = new Joystick(0);
     logitech = new Joystick(1);
     driverOne = new Joystick(3);
     driverTwo = new Joystick(4);
+
+    // b.whenPressed(new Move(ticks_per_centimeter*RobotMap.lidar.getDistance()));
 
     fK = new JoystickButton(driverOne, 1);
     tK = new JoystickButton(driverOne, 4);
