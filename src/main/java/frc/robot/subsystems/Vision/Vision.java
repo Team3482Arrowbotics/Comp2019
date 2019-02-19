@@ -21,7 +21,13 @@ public class Vision implements PIDSource{
     public void run(){
 
     }
-    public pidGet(){
-
+    public double pidGet(){
+        return 0;
+    }
+    public PIDSourceType getPIDSourceType(){
+        return type;
+    }
+    public void setPIDSourceType(PIDSourceType type){
+        this.type = type;
     }
 }
