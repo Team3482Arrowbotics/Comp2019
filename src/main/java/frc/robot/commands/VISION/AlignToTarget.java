@@ -6,8 +6,21 @@ import frc.robot.RobotMap;
 public class AlignToTarget extends Command {
     
     // Called just before this Command runs the first time
+    boolean isBalling;
+    
+    
+    public AlignToTarget(boolean isBalling){
+        this.isBalling = isBalling;
+    }
+
     @Override
     protected void initialize() {
+        //RobotMap.driveDiff.setTurning();
+        if(isBalling){
+            RobotMap.visionDistController.setSetpoint(110);
+        } else {
+            RobotMap.visionDistController.setSetpoint(120);
+        }
         RobotMap.visionController.enable();
         RobotMap.visionDistController.enable();        
     }
@@ -18,8 +31,8 @@ public class AlignToTarget extends Command {
         
         if(RobotMap.visionDistController.onTarget()){
             RobotMap.visionDistController.disable();
-            if(RobotMap.visionDistController.onTarget()){
-                RobotMap.visionDistController.disable();
+            if(RobotMap.visionController.onTarget()){
+                RobotMap.visionController.disable();
             }
         }
     }

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ARM.*;
 import frc.robot.commands.ELEVATOR.*;
@@ -40,9 +41,18 @@ public class OI {
   public static JoystickButton o;
   public static JoystickButton t;
 
-  public static JoystickButton s;
-  public static JoystickButton n;
+  public static JoystickButton armUp;
+  public static JoystickButton armDown;
+
   public static JoystickButton x;
+  public static JoystickButton a; 
+  public static JoystickButton b;
+  public static JoystickButton y;
+
+  public static JoystickButton f8;
+  public static JoystickButton f9;
+  public static JoystickButton f7;
+  public static JoystickButton f10;
 
   private static final double ticks_per_centimeter = 2000/317.5; //travels 125in in 2000 encoder ticks
 
@@ -54,17 +64,28 @@ public class OI {
     driverOne = new Joystick(3);
     driverTwo = new Joystick(4);
 
+    f8 = new JoystickButton(flightStick, 8);
+    f7 = new JoystickButton(flightStick, 7);
+    f9 = new JoystickButton(flightStick, 9);
+    f10 = new JoystickButton(flightStick, 10);
+
     // b.whenPressed(new Move(ticks_per_centimeter*RobotMap.lidar.getDistance()));
 
-    eMax = new JoystickButton(driverOne, 2);
-    eMin = new JoystickButton(driverOne, 8);
+    a = new JoystickButton(logitech, 1); 
+    b = new JoystickButton(logitech, 2);
+
+    eMax = new JoystickButton(driverTwo, 10);
+    eMin = new JoystickButton(driverTwo, 11);
+
+    armUp = new JoystickButton(driverTwo, 12);
+    armDown = new JoystickButton(driverTwo, 9);
 
     t = new JoystickButton(flightStick, 2);
     o = new JoystickButton(flightStick, 1);
-    s = new JoystickButton(flightStick, 3);
-    n = new JoystickButton(flightStick, 4);
+   
     eDown = new JoystickButton(flightStick, 5);
     x = new JoystickButton(logitech, 3);
+    y = new JoystickButton(logitech, 4);
 
     lb = new JoystickButton(logitech, 5);
     rb = new JoystickButton(logitech, 6);
@@ -72,11 +93,32 @@ public class OI {
     hIn = new JoystickButton(flightStick, 11);
     hOut = new JoystickButton(flightStick, 12);
 
-    eMax.whileHeld(new ElevatorZero());
-    eMin.whileHeld(new ElevatorMax());
+    //a.whenPressed(new Move(2000)); 
+    //a.whileHeld(new ArmMotion(0, RobotMap.armTurn));
+    //b.whileHeld(new ArmMotion(0, RobotMap.armTurn));
+    /*if(RobotMap.hatch.get() == Value.kForward)
+    {
+      x.whileHeld(new HatchIn());
+    }
+    else
+    {
+      x.whileHeld(new HatchOut());
+    }
 
-    s.whileHeld(new ArmUp());
-    n.whileHeld(new ArmDown());
+    if(RobotMap.fArm.get() == Value.kForward)
+    {
+      y.whileHeld(new ArmUp());
+    }
+    else
+    {
+      y.whileHeld(new ArmDown());
+    }*/
+
+    eMax.whileHeld(new ElevatorMax());
+    eMin.whileHeld(new ElevatorZero());
+
+    armUp.whileHeld(new ArmUp());
+    armDown.whileHeld(new ArmDown());
 
     o.whileHeld(new TimedArmDown());
     t.whileHeld(new TimedArmUp());
@@ -90,7 +132,7 @@ public class OI {
 
     hIn.whileHeld(new HatchIn());
     hOut.whileHeld(new HatchOut());
-    x.whileHeld(new HatchPlusArm());
+    //x.whileHeld(new BallIntake());
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

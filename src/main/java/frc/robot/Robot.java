@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
   public static NetworkTableEntry distance;
   public static NetworkTableEntry angle;
   public static NetworkTableEntry isLeft;
+  public static NetworkTableEntry visionCam;
 
   private EncoderFollower l_enc_follower; 
   private EncoderFollower r_enc_follower; 
@@ -95,6 +96,7 @@ public class Robot extends TimedRobot {
     distance = vision.getEntry("distance");
     angle = vision.getEntry("angle");
     isLeft = vision.getEntry("isLeft");
+    visionCam = vision.getEntry("visionCam");
 
     driveEnabled = true; 
     pathChooser = new SendableChooser<String>(); 
@@ -230,7 +232,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-
+/*
     if(hatch)
     {
       if(state == 1) //start path 1
@@ -288,7 +290,7 @@ public class Robot extends TimedRobot {
       {
         new HatchIn(); 
       }
-    }
+    }*/
   }
 
   @Override
@@ -317,7 +319,7 @@ public class Robot extends TimedRobot {
     double turnSpeed = OI.logitech.getRawAxis(4);
 
     if (driveEnabled) {
-			RobotMap.drive.arcadeDrive(0.7*turnSpeed, -0.7*speed);
+			RobotMap.drive.arcadeDrive(turnSpeed, -speed);
 		}
   }
 

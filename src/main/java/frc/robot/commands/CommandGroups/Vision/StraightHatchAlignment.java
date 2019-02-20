@@ -8,9 +8,9 @@ import frc.robot.commands.HATCH.HatchIn;
 import frc.robot.commands.HATCH.HatchOut;
 import frc.robot.commands.VISION.AlignToTarget;
 
-public class StraightAlignment extends CommandGroup {
-    public StraightAlignment(){
-        addSequential(new AlignToTarget());
+public class StraightHatchAlignment extends CommandGroup {
+    public StraightHatchAlignment(){
+        addSequential(new AlignToTarget(false));
         if(RobotMap.hatch.get() == Value.kForward){
             addSequential(new HatchIn());
         } else {

@@ -151,7 +151,7 @@ public class RobotMap {
 		visionController.setContinuous(true);
     visionController.setAbsoluteTolerance(5);
 
-    visionDistController = new PIDController(0.1, 0, 0, vDist, driveDiff);
+    visionDistController = new PIDController(0.1, 0, 0, vDist, drivePID);
     visionDistController.setInputRange(-320, 320);
 		visionDistController.setOutputRange(-.5, .5);
 		visionDistController.setContinuous(true);

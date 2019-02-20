@@ -5,26 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.ARM;
+package frc.robot.commands.ELEVATOR;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * Claw goes spinny spinnyyyyyyy
+ * An example command.  You can replace me with your own command.
  */
-public class ClawSpintake extends Command {
-
-  public ClawSpintake() {
+public class ElevatorMove extends Command {
+    double distance;
+  public ElevatorMove(double dist) {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
+
+    if(dist < 0){
+        throw new IllegalArgumentException("Distance must be Positive");
+    }
+    
+    if(dist > 180000){
+        throw new IllegalArgumentException("Distance must be less than max height");
+    }
+
+    distance = dist;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.armIntake.set(0.6);
+      RobotMap.elevatorTalonOne.set(ControlMode.Position, distance);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -41,7 +54,6 @@ public class ClawSpintake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    RobotMap.armIntake.set(0);
   }
 
   // Called when another command which requires one or more of the same

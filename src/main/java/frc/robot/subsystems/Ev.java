@@ -30,9 +30,9 @@ public class Ev extends Subsystem {
   {
       int z = RobotMap.elevatorTalonOne.getSelectedSensorPosition();
 
-      if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 170000)
+      if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 180000)
       {
-          RobotMap.elevatorTalonOne.set(ControlMode.Position, 155000);
+          RobotMap.elevatorTalonOne.set(ControlMode.Position, 170000);
       } 
       else if (RobotMap.elevatorTalonOne.getSelectedSensorPosition() < 0)
       {
@@ -45,9 +45,9 @@ public class Ev extends Subsystem {
            {
               RobotMap.elevatorTalonOne.set(OI.flightStick.getRawAxis(1) * 0.6);
 
-              if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 170000)
+              if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 190000)
               {
-                RobotMap.elevatorTalonOne.set(ControlMode.Position, 155000);
+                RobotMap.elevatorTalonOne.set(ControlMode.Position, 180000);
               } 
               else if (RobotMap.elevatorTalonOne.getSelectedSensorPosition() < 0)
               {
@@ -58,9 +58,9 @@ public class Ev extends Subsystem {
           {
               RobotMap.elevatorTalonOne.set(OI.flightStick.getRawAxis(1) * 0.8);
 
-              if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 170000)
+              if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() > 190000)
               {
-                RobotMap.elevatorTalonOne.set(ControlMode.Position, 155000);
+                RobotMap.elevatorTalonOne.set(ControlMode.Position, 180000);
               } 
               else if (RobotMap.elevatorTalonOne.getSelectedSensorPosition() < 0)
               {

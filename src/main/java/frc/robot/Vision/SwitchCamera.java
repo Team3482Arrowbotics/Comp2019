@@ -9,11 +9,14 @@ public class SwitchCamera{
 
     }
 
-    public void toggle(){
+    public void run(){
         if(RobotMap.elevatorTalonOne.getSelectedSensorPosition() < TOGGLE_HEIGHT){
             
         } else {
             
         }        
+    }
+    public void toggle(){
+
     }
 }
