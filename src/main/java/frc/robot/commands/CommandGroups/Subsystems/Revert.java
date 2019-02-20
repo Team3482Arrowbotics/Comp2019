@@ -2,18 +2,20 @@ package frc.robot.commands.CommandGroups.Subsystems;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.RobotMap;
+import frc.robot.commands.ArmMotion;
+import frc.robot.commands.Move;
 import frc.robot.commands.ARM.*;
-import frc.robot.commands.CommandGroups.Vision.Alignment;
 import frc.robot.commands.ELEVATOR.*;
-import frc.robot.commands.HATCH.HatchOut;
+import frc.robot.commands.HATCH.*;
 import frc.robot.commands.VISION.AlignToTarget;
 import frc.robot.commands.VISION.CenterToTarget;
-import frc.robot.commands.*;
 
-public class HatchOuttakeTwo extends CommandGroup
+public class Revert extends CommandGroup
 {
-    public HatchOuttakeTwo()
+    public Revert()
     {
-        addSequential(new ElevatorMove(110500));
+        addParallel(new ElevatorZero());
+        addParallel(new ArmMotion(0, RobotMap.armTurn));
+        addSequential(new HatchOut());
     }
 }

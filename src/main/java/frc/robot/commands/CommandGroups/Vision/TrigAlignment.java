@@ -14,7 +14,7 @@ public class TrigAlignment extends CommandGroup {
         } else {
             isReallyLeft = 1;
         }
-        addSequential(new Turn((90 - angle) * isReallyLeft * -1));
+        addSequential(new Turn((90 - angle) * isReallyLeft));
         addSequential(new Move(Math.sin(Math.toRadians(angle)) * distance));
         addSequential(new Turn(90 * isReallyLeft));
         addSequential(new StraightHatchAlignment());

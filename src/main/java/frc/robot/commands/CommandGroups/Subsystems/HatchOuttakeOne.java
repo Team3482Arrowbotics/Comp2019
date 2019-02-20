@@ -8,19 +8,13 @@ import frc.robot.commands.CommandGroups.Vision.Alignment;
 import frc.robot.commands.ELEVATOR.*;
 import frc.robot.commands.HATCH.HatchIn;
 import frc.robot.commands.HATCH.HatchOut;
+import frc.robot.commands.VISION.*;
 import frc.robot.commands.*;
 
 public class HatchOuttakeOne extends CommandGroup
 {
     public HatchOuttakeOne()
     {
-        addSequential(new Alignment());
-        addSequential(new ElevatorMove(10000));
-        if(RobotMap.hatch.get() == Value.kForward){
-            addSequential(new HatchIn());
-        } else {
-            addSequential(new HatchOut());
-        }
-        addSequential(new ElevatorMove(0));
+        addSequential(new HatchOut());
     }
 }

@@ -25,7 +25,7 @@ public class ElevatorMax extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      RobotMap.elevatorTalonOne.set(ControlMode.Position, 175000);
+      RobotMap.elevatorTalonOne.set(ControlMode.Position, 190000);
   }
 
   // Called repeatedly when this Command is scheduled to run

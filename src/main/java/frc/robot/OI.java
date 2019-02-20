@@ -25,9 +25,6 @@ public class OI {
   public static Joystick flightStick;
   public static Joystick logitech;
 
-  public static JoystickButton eMax;
-  public static JoystickButton eMin;
-
   public static JoystickButton hIn;
   public static JoystickButton hOut;
   public static JoystickButton eDown;
@@ -41,9 +38,6 @@ public class OI {
   public static JoystickButton o;
   public static JoystickButton t;
 
-  public static JoystickButton armUp;
-  public static JoystickButton armDown;
-
   public static JoystickButton x;
   public static JoystickButton a; 
   public static JoystickButton b;
@@ -54,6 +48,19 @@ public class OI {
   public static JoystickButton f7;
   public static JoystickButton f10;
 
+  public static JoystickButton r1;
+  public static JoystickButton r2;
+  public static JoystickButton r3;
+  public static JoystickButton r4;
+  public static JoystickButton b1;
+  public static JoystickButton b2;
+  public static JoystickButton b3;
+  public static JoystickButton b4;
+  public static JoystickButton w1;
+  public static JoystickButton w2;
+  public static JoystickButton blue1;
+  public static JoystickButton blue2;
+  
   private static final double ticks_per_centimeter = 2000/317.5; //travels 125in in 2000 encoder ticks
 
 
@@ -64,6 +71,20 @@ public class OI {
     driverOne = new Joystick(3);
     driverTwo = new Joystick(4);
 
+    r1 = new JoystickButton(driverTwo, 8);
+    r2 = new JoystickButton(driverTwo, 7);
+    r3 = new JoystickButton(driverTwo, 6);
+    r4 = new JoystickButton(driverTwo, 5);
+    b1 = new JoystickButton(driverOne, 1);
+    b2 = new JoystickButton(driverOne, 4);
+    b3 = new JoystickButton(driverOne, 3);
+    b4 = new JoystickButton(driverOne, 2);
+    w1 = new JoystickButton(driverOne, 8);
+    w2 = new JoystickButton(driverOne, 5);
+    blue1 = new JoystickButton(driverOne, 12);
+    blue2 = new JoystickButton(driverOne, 9);
+
+
     f8 = new JoystickButton(flightStick, 8);
     f7 = new JoystickButton(flightStick, 7);
     f9 = new JoystickButton(flightStick, 9);
@@ -73,12 +94,6 @@ public class OI {
 
     a = new JoystickButton(logitech, 1); 
     b = new JoystickButton(logitech, 2);
-
-    eMax = new JoystickButton(driverTwo, 10);
-    eMin = new JoystickButton(driverTwo, 11);
-
-    armUp = new JoystickButton(driverTwo, 12);
-    armDown = new JoystickButton(driverTwo, 9);
 
     t = new JoystickButton(flightStick, 2);
     o = new JoystickButton(flightStick, 1);
@@ -114,12 +129,6 @@ public class OI {
       y.whileHeld(new ArmDown());
     }*/
 
-    eMax.whileHeld(new ElevatorMax());
-    eMin.whileHeld(new ElevatorZero());
-
-    armUp.whileHeld(new ArmUp());
-    armDown.whileHeld(new ArmDown());
-
     o.whileHeld(new TimedArmDown());
     t.whileHeld(new TimedArmUp());
     eDown.whileHeld(new EmergencyTalonZero());
@@ -132,7 +141,19 @@ public class OI {
 
     hIn.whileHeld(new HatchIn());
     hOut.whileHeld(new HatchOut());
-    //x.whileHeld(new BallIntake());
+
+    /*r1.whileHeld(new HatchIntake());
+    //r2.whileHeld(new HatchOuttakeOne());
+    r3.whileHeld(new ElevatorMove(110500));
+    r4.whileHeld(new ElevatorMove(180000));
+    b1.whileHeld(new BallIntake());
+    b2.whileHeld(new BallOuttakeOne());
+    b3.whileHeld(new BallOuttakeTwo());
+    b4.whileHeld(new BallOuttakeThree());
+    w1.whileHeld(new ArmMotion(0,RobotMap.armTurn));
+    w2.whileHeld(new ElevatorZero());
+    blue1.whileHeld(new HatchIn());
+    blue2.whileHeld(new HatchOut());*/
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

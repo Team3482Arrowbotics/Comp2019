@@ -17,9 +17,9 @@ public class AlignToTarget extends Command {
     protected void initialize() {
         //RobotMap.driveDiff.setTurning();
         if(isBalling){
-            RobotMap.visionDistController.setSetpoint(110);
+            RobotMap.visionDistController.setSetpoint(0);
         } else {
-            RobotMap.visionDistController.setSetpoint(120);
+            RobotMap.visionDistController.setSetpoint(140);
         }
         RobotMap.visionController.enable();
         RobotMap.visionDistController.enable();        
@@ -35,11 +35,13 @@ public class AlignToTarget extends Command {
                 RobotMap.visionController.disable();
             }
         }
+        System.out.println("Is targetting");
     }
     
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+        System.out.println("Is Over");
         return !RobotMap.visionController.isEnabled();
     }
     

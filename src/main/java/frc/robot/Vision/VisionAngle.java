@@ -11,7 +11,7 @@ public class VisionAngle implements PIDSource{
 
     }
     public double pidGet(){
-        double angle = RobotMap.vision.returnXDist();
+        double angle = RobotMap.vision.returnCenterX();
         if(angle >= 0){
             return angle;
         } else {

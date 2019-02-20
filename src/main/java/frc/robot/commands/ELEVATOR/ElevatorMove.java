@@ -22,13 +22,13 @@ public class ElevatorMove extends Command {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
 
-    if(dist < 0){
-        throw new IllegalArgumentException("Distance must be Positive");
-    }
+    // if(dist < 0){
+    //     throw new IllegalArgumentException("Distance must be Positive");
+    // }
     
-    if(dist > 180000){
-        throw new IllegalArgumentException("Distance must be less than max height");
-    }
+    // if(dist > 180000){
+    //     throw new IllegalArgumentException("Distance must be less than max height");
+    // }
 
     distance = dist;
 
@@ -48,7 +48,7 @@ public class ElevatorMove extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

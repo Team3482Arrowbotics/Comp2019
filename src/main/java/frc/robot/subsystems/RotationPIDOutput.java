@@ -7,17 +7,20 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class RotationPIDOutput extends Subsystem {
+public class RotationPIDOutput extends Subsystem implements PIDOutput{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  double linOutput = 0;
   public void pidWrite(double output){
-    RobotMap.driveDiff.arcadeDrive(0, output);
+    RobotMap.drive.arcadeDrive(-output, Robot.linDrive);
   }
   @Override
   public void initDefaultCommand() {

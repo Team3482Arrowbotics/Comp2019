@@ -29,8 +29,11 @@ import jaci.pathfinder.followers.EncoderFollower;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.commands.Move;
 import frc.robot.commands.Turn;
+import frc.robot.commands.CommandGroups.Vision.StraightHatchAlignment;
+import frc.robot.commands.CommandGroups.Vision.TrigAlignment;
 import frc.robot.commands.HATCH.HatchIn;
 import frc.robot.commands.HATCH.HatchOut;
+import frc.robot.commands.VISION.AlignToTarget;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -59,6 +62,8 @@ public class Robot extends TimedRobot {
   public static NetworkTableEntry isLeft;
   public static NetworkTableEntry visionCam;
 
+  public static double linDrive = 0;
+
   private EncoderFollower l_enc_follower; 
   private EncoderFollower r_enc_follower; 
 
@@ -80,15 +85,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    RobotMap.init();
-    m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
-    isEMovingUp = false;
-    isEMovingDown = false;
-    RobotMap.c.start();
-
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable vision = inst.getTable("Vision");
     centerX = vision.getEntry("centerX");
@@ -97,6 +93,15 @@ public class Robot extends TimedRobot {
     angle = vision.getEntry("angle");
     isLeft = vision.getEntry("isLeft");
     visionCam = vision.getEntry("visionCam");
+
+    RobotMap.init();
+    m_oi = new OI();
+    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    // chooser.addOption("My Auto", new MyAutoCommand());
+    SmartDashboard.putData("Auto mode", m_chooser);
+    isEMovingUp = false;
+    isEMovingDown = false;
+    RobotMap.c.start();
 
     driveEnabled = true; 
     pathChooser = new SendableChooser<String>(); 
@@ -164,11 +169,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    // m_autonomousCommand = m_chooser.getSelected();
 
-    pathname = pathChooser.getSelected(); 
-    SmartDashboard.putString("Selected Path", pathname);
-
+    // pathname = pathChooser.getSelected(); 
+    // SmartDashboard.putString("Selected Path", pathname);
+    StraightHatchAlignment h = new StraightHatchAlignment();
+    h.start();
+    // RobotMap.visionController.enable();
+    // Move m = new Move(500);
+    // m.start();
     /*if(hatchOrCargo.getSelected().equals("Hatch"))
     {
       hatch = true;
@@ -185,24 +194,24 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
-    RobotMap.navx.reset(); 
-    RobotMap.encoderLeft.reset();
-    RobotMap.encoderRight.reset();     
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.start();
+    // }
+    // RobotMap.navx.reset(); 
+    // RobotMap.encoderLeft.reset();
+    // RobotMap.encoderRight.reset();     
 
-    Trajectory left_trajectory = PathfinderFRC.getTrajectory(pathname + ".left");
-    Trajectory right_trajectory = PathfinderFRC.getTrajectory(pathname+ ".right");
+    // Trajectory left_trajectory = PathfinderFRC.getTrajectory(pathname + ".left");
+    // Trajectory right_trajectory = PathfinderFRC.getTrajectory(pathname+ ".right");
 
-    l_enc_follower = new EncoderFollower(left_trajectory);
-    r_enc_follower = new EncoderFollower(right_trajectory);
-    l_enc_follower.configureEncoder(RobotMap.encoderLeft.get(), k_ticks_per_rev, k_wheel_diameter);
-    l_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
-    r_enc_follower.configureEncoder(RobotMap.encoderRight.get(), k_ticks_per_rev, k_wheel_diameter);
-    r_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
-    follower_notifier = new Notifier(this::followPath);
-    follower_notifier.startPeriodic(left_trajectory.get(0).dt);
+    // l_enc_follower = new EncoderFollower(left_trajectory);
+    // r_enc_follower = new EncoderFollower(right_trajectory);
+    // l_enc_follower.configureEncoder(RobotMap.encoderLeft.get(), k_ticks_per_rev, k_wheel_diameter);
+    // l_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
+    // r_enc_follower.configureEncoder(RobotMap.encoderRight.get(), k_ticks_per_rev, k_wheel_diameter);
+    // r_enc_follower.configurePIDVA(0.8, 0.0, 0.0, 1 / k_max_velocity, 0);
+    // follower_notifier = new Notifier(this::followPath);
+    // follower_notifier.startPeriodic(left_trajectory.get(0).dt);
     //intake 
     //new path 
   }
@@ -320,7 +329,10 @@ public class Robot extends TimedRobot {
 
     if (driveEnabled) {
 			RobotMap.drive.arcadeDrive(turnSpeed, -speed);
-		}
+    }
+    System.out.println("turnSpeed: " + turnSpeed);
+    System.out.println("speed: " + speed);
+
   }
 
   /**
@@ -328,5 +340,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    System.out.println("Angle: " + RobotMap.vAng.pidGet());
+    System.out.println("Distance: " + RobotMap.vDist.pidGet());
   }
 }
